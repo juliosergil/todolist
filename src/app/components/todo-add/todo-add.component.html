@@ -1,0 +1,99 @@
+<div>
+  <h2>Cadastro de tarefas</h2>
+  <p>Preencha o formulário para incluir uma tarefa.</p>
+  <hr />
+
+
+  <div
+    *ngIf="todo.id > 0"
+    class="alert alert-success alert-dismissible fade show"
+    role="alert"
+  >
+    <div>
+      <strong>Sucesso!</strong> Tarefa cadastrada com sucesso.
+      <hr />
+      <div>
+        Id: <strong>{{ todo.id }}</strong>
+      </div>
+      <div>
+        Nome da tarefa: <strong>{{ todo.title }}</strong>
+      </div>
+      <div>
+        Decrição: <strong>{{ todo.description }}</strong>
+      </div>
+      <div>
+        Status:
+        <strong>{{ todo.completed ? "Finalizado" : "Em aberto" }}</strong>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="todo.id = 0"
+    ></button>
+  </div>
+
+
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="col-md-8">
+        <label>Nome da tarefa:</label>
+        <input
+          type="text"
+          placeholder="Digite aqui"
+          class="form-control"
+          formControlName="title"
+        />
+        <span
+          class="text-danger"
+          *ngIf="f['title'].touched && f['title'].invalid"
+        >
+          Por favor, informe o nome da tarefa.
+        </span>
+      </div>
+
+
+      <div class="col-md-4">
+        <label>Status da tarefa:</label>
+        <select class="form-select" formControlName="completed">
+          <option value="">Escolha uma opção</option>
+          <option value="false">Em aberto</option>
+          <option value="true">Finalizado</option>
+        </select>
+        <span
+          class="text-danger"
+          *ngIf="f['completed'].touched && f['completed'].invalid"
+        >
+          Por favor, selecione o status da tarefa.
+        </span>
+      </div>
+    </div>
+
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <label>Descrição:</label>
+        <textarea class="form-control" formControlName="description"></textarea>
+        <span
+          class="text-danger"
+          *ngIf="f['description'].touched && f['description'].invalid"
+        >
+          Por favor, informe a descrição da tarefa.
+        </span>
+      </div>
+    </div>
+
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <input
+          type="submit"
+          class="btn btn-success"
+          value="Realizar Cadastro"
+          [disabled]="form.invalid"
+        />
+      </div>
+    </div>
+  </form>
+</div>
